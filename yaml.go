@@ -180,9 +180,19 @@ func (self *Yaml) Write(filename string) error {
 		return err
 	}
 
-	defer fp.Close()
-
 	_, err = fp.Write(out)
+
+	if err != nil {
+		return err
+	}
+
+	err = fp.Sync()
+
+	if err != nil {
+		return err
+	}
+
+	err = fp.Close()
 
 	return err
 }
